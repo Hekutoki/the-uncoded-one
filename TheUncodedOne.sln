@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheUncodedOne", "TheUncodedOne\TheUncodedOne.csproj", "{39E45F43-E653-48BC-B3C2-8F1E5952A61A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39E45F43-E653-48BC-B3C2-8F1E5952A61A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39E45F43-E653-48BC-B3C2-8F1E5952A61A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39E45F43-E653-48BC-B3C2-8F1E5952A61A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39E45F43-E653-48BC-B3C2-8F1E5952A61A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {547BA302-DD87-4816-BF36-0F5532E9767F}
+	EndGlobalSection
+EndGlobal
