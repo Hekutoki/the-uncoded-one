@@ -32,7 +32,7 @@ class Battle
 			else PerformActions(_monsterParty);
 
 			_isHeroesTurn = !_isHeroesTurn;
-			Thread.Sleep(500);
+			Thread.Sleep(1000);
 		}
 	}
 
