@@ -9,6 +9,8 @@ namespace TheUncodedOne.Actions;
 
 internal class DoNothingAction : IAction
 {
+	public string Name => "Do nothing";
+
 	public void PerformAction(Character performingCharacter)
 	{
 		Console.WriteLine($"{performingCharacter.Name} did nothing.");

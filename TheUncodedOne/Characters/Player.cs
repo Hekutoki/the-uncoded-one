@@ -31,11 +31,47 @@ class Player : Character
     public override void PerformAction()
     {
         // Get input from user
-        Actions[0].PerformAction(this);
+        GetAction().PerformAction(this);
+
+        //Actions[0].PerformAction(this);
     }
 
     public override void TakeDamage(int damageAmount)
     {
         throw new NotImplementedException();
+    }
+
+    private IAction GetAction()
+    {
+        int userInput;
+        IAction action;
+
+		for (int i = 0; i < Actions.Count; i++)
+		{
+            Console.WriteLine(Actions[i].Name + " ---> " + i);
+		}
+
+		while (true)
+        {
+            Console.Write("Pick the action number: ");
+
+            // If can't parse input, continue
+            if (!int.TryParse(Console.ReadLine(), out userInput)) continue;
+            else if (userInput < 0 || userInput >= Actions.Count) continue;
+
+            break;
+        }
+
+		for (int i = 0; i < Actions.Count; i++)
+		{
+            if (i == userInput - 1)
+            {
+                action = Actions[i];
+                return action;
+            }
+		}
+
+        // Number somehow doesn't match any action
+		return new DoNothingAction();
     }
 }
