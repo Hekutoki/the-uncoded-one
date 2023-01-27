@@ -10,7 +10,7 @@ namespace TheUncodedOne.Characters;
 class Player : Character
 {
     public override string Name { get; init; }
-    public override List<IAction> Actions { get; }
+    public override List<IAction> Actions { get; init; }
 
     public Player() : base(GetName(), new List<IAction>() { new DoNothingAction() }) { }
 

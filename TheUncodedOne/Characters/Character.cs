@@ -5,11 +5,12 @@ namespace TheUncodedOne.Characters;
 abstract class Character : IDamageable
 {
     public abstract string Name { get; init; }
-    public abstract List<IAction> Actions { get; }
+    public abstract List<IAction> Actions { get; init; }
 
     public Character(string name, List<IAction> actions)
     {
         Name = name;
+        Actions = new();
 
         foreach (IAction action in actions)
         {
