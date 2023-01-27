@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Actions;
+using TheUncodedOne.Characters;
 
 namespace TheUncodedOne;
 
@@ -42,7 +43,7 @@ class Battle
 		{
 			Console.WriteLine($"It is {character.Name}'s turn...");
 
-			character.Actions[0]?.PerformAction(character);
+			character.PerformAction();
 
 			// Empty line for differentiating between turns
 			Console.WriteLine("");
