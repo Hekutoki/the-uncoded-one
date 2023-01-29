@@ -10,10 +10,6 @@ namespace TheUncodedOne.Characters;
 
 class Player : Character
 {
-    public override string Name { get; init; }
-    public override List<IAction> Actions { get; init; }
-    public override List<Attack> Attacks { get; init; }
-
     public Player() : base(GetName(), 
         new List<IAction>() { new DoNothingAction(), new AttackAction() },
         new List<Attack>() { new Attack("PUNCH") }) { }
