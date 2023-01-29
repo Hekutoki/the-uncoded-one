@@ -11,16 +11,24 @@ class Skeleton : Character
 {
 	public override string Name { get; init; }
 	public override List<IAction> Actions { get; init; }
+	public override List<Attack> Attacks { get; init; }
 
-	public Skeleton() : base("SKELETON", new List<IAction>() { new DoNothingAction() }) { }
+	public Skeleton() : base("SKELETON", 
+		new List<IAction>() { new DoNothingAction(), new AttackAction() },
+		new List<Attack>() { new Attack("BONE CRUNCH") }) { }
 
 	public override void PerformAction()
 	{
-		Actions[0].PerformAction(this);
+		Actions[new Random().Next(Actions.Count)].PerformAction(this);
 	}
 
 	public override void TakeDamage(int damageAmount)
 	{
 		throw new NotImplementedException();
+	}
+
+	public override Attack ChooseAttack()
+	{
+		return Attacks[new Random().Next(Attacks.Count)];
 	}
 }

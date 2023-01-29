@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Actions;
+using static System.Collections.Specialized.BitVector32;
 
 namespace TheUncodedOne.Characters;
 
@@ -11,8 +12,11 @@ class Player : Character
 {
     public override string Name { get; init; }
     public override List<IAction> Actions { get; init; }
+    public override List<Attack> Attacks { get; init; }
 
-    public Player() : base(GetName(), new List<IAction>() { new DoNothingAction() }) { }
+    public Player() : base(GetName(), 
+        new List<IAction>() { new DoNothingAction(), new AttackAction() },
+        new List<Attack>() { new Attack("PUNCH") }) { }
 
     public static string GetName()
     {
@@ -48,7 +52,7 @@ class Player : Character
 
 		for (int i = 0; i < Actions.Count; i++)
 		{
-            Console.WriteLine(Actions[i].Name + " ---> " + i);
+            Console.WriteLine(i + " <--- " + Actions[i].Name);
 		}
 
 		while (true)
@@ -64,7 +68,7 @@ class Player : Character
 
 		for (int i = 0; i < Actions.Count; i++)
 		{
-            if (i == userInput - 1)
+            if (i == userInput)
             {
                 action = Actions[i];
                 return action;
@@ -74,4 +78,37 @@ class Player : Character
         // Number somehow doesn't match any action
 		return new DoNothingAction();
     }
+
+    public override Attack ChooseAttack()
+    {
+		int userInput;
+        Attack attack;
+
+		for (int i = 0; i < Attacks.Count; i++)
+		{
+			Console.WriteLine(i + " <--- " + Attacks[i].Name);
+		}
+
+		while (true)
+		{
+			Console.Write("Pick the attack number: ");
+
+			// If can't parse input, continue
+			if (!int.TryParse(Console.ReadLine(), out userInput)) continue;
+			else if (userInput < 0 || userInput >= Attacks.Count) continue;
+
+			break;
+		}
+
+		for (int i = 0; i < Actions.Count; i++)
+        {
+			if (i == userInput)
+			{
+				attack = Attacks[i];
+				return attack;
+			}
+		}
+
+        return Attacks[0];
+	}
 }
