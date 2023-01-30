@@ -5,12 +5,15 @@ namespace TheUncodedOne.Characters;
 abstract class Character : IDamageable
 {
     public string Name { get; }
-    public List<IAction> Actions { get; init; }
-    public List<Attack> Attacks { get; init; }
+    public bool IsAICharacter { get; }
+    public List<IAction> Actions { get; }
+    public List<Attack> Attacks { get; }
 
-    public Character(string name, List<IAction> actions, List<Attack> attacks)
+    public Character(string name, List<IAction> actions, List<Attack> attacks, bool aiCharacter = false)
     {
         Name = name;
+        IsAICharacter = aiCharacter;
+
         Actions = actions.Where(a => a != null).ToList();
         Attacks = attacks;
 	}
