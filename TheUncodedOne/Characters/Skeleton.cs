@@ -13,9 +13,14 @@ class Skeleton : Character
 		new List<IAction>() { new DoNothingAction(), new AttackAction() },
 		new List<Attack>() { new Attack("BONE CRUNCH") }) { }
 
-	public override void PerformAction()
+	public Skeleton(string name) : base(name,
+		new List<IAction>() { new DoNothingAction(), new AttackAction() },
+		new List<Attack>() { new Attack("BONE CRUNCH") }) { }
+
+	public override void PerformAction(Battle battle)
 	{
-		Actions[new Random().Next(Actions.Count)].Perform(this);
+		// 1 is Attack action
+		Actions[1].Perform(this, battle);
 	}
 
 	public override void TakeDamage(int damageAmount)
@@ -26,5 +31,13 @@ class Skeleton : Character
 	public override Attack ChooseAttack()
 	{
 		return Attacks[new Random().Next(Attacks.Count)];
+	}
+
+	public override Character ChooseTarget(Battle battle)
+	{
+		Party enemyParty = battle.GetEnemyParty(this);
+		int characterCount = enemyParty.Characters.Count;
+
+		return enemyParty.Characters[new Random().Next(characterCount)];
 	}
 }

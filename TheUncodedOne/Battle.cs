@@ -10,8 +10,8 @@ namespace TheUncodedOne;
 
 class Battle
 {
-	private Party _heroParty;
-	private Party _monsterParty;
+	public readonly Party HeroParty;
+	public readonly Party MonsterParty;
 	private bool _isHeroesTurn = true;
 
 	public int TurnCount { get; private set; }
@@ -20,8 +20,8 @@ class Battle
 	{
 		TurnCount = 1;
 
-		_heroParty = heroParty;
-		_monsterParty = monsterParty;
+		HeroParty = heroParty;
+		MonsterParty = monsterParty;
 	}
 
 	// Main game loop
@@ -29,12 +29,31 @@ class Battle
 	{
 		while (true)
 		{
-			if (_isHeroesTurn) PerformActions(_heroParty);
-			else PerformActions(_monsterParty);
+			if (_isHeroesTurn) PerformActions(HeroParty);
+			else PerformActions(MonsterParty);
 
 			_isHeroesTurn = !_isHeroesTurn;
-			Thread.Sleep(1000);
 		}
+	}
+
+	// Gives party allied to given character
+	public Party GetAllyParty(Character character)
+	{
+		foreach (Character heroChar in HeroParty.Characters)
+		{
+			if (heroChar == character) return HeroParty;
+		}
+		return MonsterParty;
+	}
+
+	// Gives enemy party of given character
+	public Party GetEnemyParty(Character character)
+	{
+		foreach (Character heroChar in HeroParty.Characters)
+		{
+			if (heroChar == character) return MonsterParty;
+		}
+		return HeroParty;
 	}
 
 	private void PerformActions(Party party)
@@ -43,10 +62,11 @@ class Battle
 		{
 			Console.WriteLine($"It is {character.Name}'s turn...");
 
-			character.PerformAction();
+			character.PerformAction(this);
 
 			// Empty line for differentiating between turns
 			Console.WriteLine("");
+			Thread.Sleep(1000);
 		}
 	}
 }

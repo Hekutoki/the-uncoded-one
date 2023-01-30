@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Actions;
@@ -28,10 +29,10 @@ class Player : Character
         return name;
     }
 
-    public override void PerformAction()
+    public override void PerformAction(Battle battle)
     {
         // Get input from user
-        GetAction().Perform(this);
+        GetAction().Perform(this, battle);
 
         //Actions[0].PerformAction(this);
     }
@@ -102,6 +103,14 @@ class Player : Character
 
         return Attacks[0];
 	}
+
+    public override Character ChooseTarget(Battle battle)
+    {
+        Party enemyParty = battle.GetEnemyParty(this);
+        int charactersCount = enemyParty.Characters.Count;
+
+        return enemyParty.Characters[new Random().Next(charactersCount)];
+    }
 
     public override void TakeDamage(int damageAmount)
     {
