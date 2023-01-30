@@ -9,7 +9,7 @@ abstract class Character : IDamageable
     public List<IAction> Actions { get; }
     public List<Attack> Attacks { get; }
 
-    public Character(string name, List<IAction> actions, List<Attack> attacks, bool aiCharacter = false)
+    public Character(string name, List<IAction> actions, List<Attack> attacks, bool aiCharacter = true)
     {
         Name = name;
         IsAICharacter = aiCharacter;

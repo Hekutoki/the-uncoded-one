@@ -23,10 +23,6 @@ class Skeleton : Character
 		Actions[1].Perform(this, battle);
 	}
 
-	public override void TakeDamage(int damageAmount)
-	{
-		throw new NotImplementedException();
-	}
 
 	public override Attack ChooseAttack()
 	{
@@ -39,5 +35,10 @@ class Skeleton : Character
 		int characterCount = enemyParty.Characters.Count;
 
 		return enemyParty.Characters[new Random().Next(characterCount)];
+	}
+
+	public override void TakeDamage(int damageAmount)
+	{
+		throw new NotImplementedException();
 	}
 }

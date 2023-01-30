@@ -36,8 +36,6 @@ class User
             if (int.TryParse(Console.ReadLine(), out userAnswer))   break;
 		}
 
-		Console.Clear();
-
 		return userAnswer;
 	}
 
