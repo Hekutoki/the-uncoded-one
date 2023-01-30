@@ -11,7 +11,7 @@ class AttackAction : IAction
 {
 	public string Name => "Attack";
 
-	public void PerformAction(Character performingCharacter)
+	public void Perform(Character performingCharacter)
 	{
 		Attack attack = performingCharacter.ChooseAttack();
 		Console.WriteLine($"{performingCharacter.Name} used {attack.Name}");

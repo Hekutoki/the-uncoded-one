@@ -11,7 +11,7 @@ internal class DoNothingAction : IAction
 {
 	public string Name => "Do nothing";
 
-	public void PerformAction(Character performingCharacter)
+	public void Perform(Character performingCharacter)
 	{
 		Console.WriteLine($"{performingCharacter.Name} did nothing.");
 	}

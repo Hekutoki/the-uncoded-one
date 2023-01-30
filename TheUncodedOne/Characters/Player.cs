@@ -31,14 +31,9 @@ class Player : Character
     public override void PerformAction()
     {
         // Get input from user
-        GetAction().PerformAction(this);
+        GetAction().Perform(this);
 
         //Actions[0].PerformAction(this);
-    }
-
-    public override void TakeDamage(int damageAmount)
-    {
-        throw new NotImplementedException();
     }
 
     private IAction GetAction()
@@ -107,4 +102,9 @@ class Player : Character
 
         return Attacks[0];
 	}
+
+    public override void TakeDamage(int damageAmount)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -15,7 +15,7 @@ class Skeleton : Character
 
 	public override void PerformAction()
 	{
-		Actions[new Random().Next(Actions.Count)].PerformAction(this);
+		Actions[new Random().Next(Actions.Count)].Perform(this);
 	}
 
 	public override void TakeDamage(int damageAmount)
