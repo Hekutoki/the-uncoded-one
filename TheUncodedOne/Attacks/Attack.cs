@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheUncodedOne.Characters;
 
-namespace TheUncodedOne.Actions;
+namespace TheUncodedOne.Attacks;
 
-interface IAction
+abstract class Attack
 {
     public string Name { get; }
-    public void Perform(Character performingCharacter, Battle battle);
+
+    public Attack(string name) { Name = name; }
+
+    public abstract int GetDamage();
 }
