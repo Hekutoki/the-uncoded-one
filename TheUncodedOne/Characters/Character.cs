@@ -1,17 +1,23 @@
-﻿using TheUncodedOne.Actions;
+﻿using System.ComponentModel.Design;
+using TheUncodedOne.Actions;
+using TheUncodedOne.Attacks;
 
 namespace TheUncodedOne.Characters;
 
-abstract class Character : IDamageable
+abstract class Character
 {
     public string Name { get; }
+    public int MaxHealth { get; }
+    public int Health { get; protected set; }
     public bool IsAICharacter { get; }
     public List<IAction> Actions { get; }
     public List<Attack> Attacks { get; }
 
-    public Character(string name, List<IAction> actions, List<Attack> attacks, bool aiCharacter = true)
+    public Character(string name, List<IAction> actions, List<Attack> attacks, int maxHealth, bool aiCharacter = true)
     {
         Name = name;
+        MaxHealth = maxHealth;
+        Health = MaxHealth;
         IsAICharacter = aiCharacter;
 
         Actions = actions.Where(a => a != null).ToList();
@@ -31,5 +37,10 @@ abstract class Character : IDamageable
 
     // Method called when something from the outside
     // is trying to damage this character
-    public abstract void TakeDamage(int damageAmount);
+    public virtual void TakeDamage(int damageAmount) 
+    {
+        if (Health > 0) Health -= damageAmount;
+
+        if (Health < 0) Health = 0;
+    }
 }

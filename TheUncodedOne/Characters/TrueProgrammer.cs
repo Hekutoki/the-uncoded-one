@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Actions;
+using TheUncodedOne.Attacks;
 
 namespace TheUncodedOne.Characters;
 
@@ -11,8 +12,9 @@ class TrueProgrammer : Character
 {
 	public TrueProgrammer() : base(User.GetString("What's your name, Programmer?"),
 			new List<IAction>() { new DoNothingAction(), new AttackAction() },
-			new List<Attack>() { new Attack("PUNCH") },
-			aiCharacter: false) { }
+			new List<Attack>() { new Punch() },
+			aiCharacter: false, 
+			maxHealth: 25) { }
 
 	public override void PerformAction(Battle battle)
 	{
@@ -48,10 +50,5 @@ class TrueProgrammer : Character
 		int userNumber = User.GetNumber("Who is your target?", characterCount);
 
 		return enemyParty.Characters[userNumber];
-	}
-
-	public override void TakeDamage(int damageAmount)
-	{
-		throw new NotImplementedException();
 	}
 }

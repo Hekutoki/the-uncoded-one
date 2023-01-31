@@ -6,6 +6,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Actions;
+using TheUncodedOne.Attacks;
 using TheUncodedOne.Characters;
 
 namespace TheUncodedOne;

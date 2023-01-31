@@ -4,18 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Actions;
+using TheUncodedOne.Attacks;
 
 namespace TheUncodedOne.Characters;
 
 class Skeleton : Character
 {
-	public Skeleton() : base("SKELETON", 
+	public Skeleton(string name = "SKELETON") : base(name,
 		new List<IAction>() { new DoNothingAction(), new AttackAction() },
-		new List<Attack>() { new Attack("BONE CRUNCH") }) { }
-
-	public Skeleton(string name) : base(name,
-		new List<IAction>() { new DoNothingAction(), new AttackAction() },
-		new List<Attack>() { new Attack("BONE CRUNCH") }) { }
+		new List<Attack>() { new BoneCrunch() },
+		maxHealth: 5) { }
 
 	public override void PerformAction(Battle battle)
 	{
@@ -35,10 +33,5 @@ class Skeleton : Character
 		int characterCount = enemyParty.Characters.Count;
 
 		return enemyParty.Characters[new Random().Next(characterCount)];
-	}
-
-	public override void TakeDamage(int damageAmount)
-	{
-		throw new NotImplementedException();
 	}
 }
