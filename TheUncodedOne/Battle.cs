@@ -33,16 +33,11 @@ class Battle
 		MonsterParty = monsterParty;
 	}
 
-	// Main game loop
 	public void Run()
 	{
 		while (true)
 		{
-			if (IsBattleOver())
-			{
-				EndBattle();
-				break;
-			}
+			if (IsBattleOver()) break;
 
 			if (_isHeroesTurn) PerformActions(HeroParty);
 			else PerformActions(MonsterParty);
@@ -89,16 +84,8 @@ class Battle
 
 	private bool IsBattleOver()
 	{
-		if (HeroParty.Characters.Count == 0 || MonsterParty.Characters.Count == 0) return true;
+		bool isAnyPartyEmpty = HeroParty.Characters.Count == 0 || MonsterParty.Characters.Count == 0;
 
-		return false;
-	}
-
-	private void EndBattle()
-	{
-		if (HeroParty.Characters.Count == 0)
-			Console.WriteLine("Hereoes lost and the Ucoded One's forces have prevailed...");
-		else
-			Console.WriteLine("Hereoes won! One more monster party defeated!");
-	}
+		return isAnyPartyEmpty;
+	} 
 }
