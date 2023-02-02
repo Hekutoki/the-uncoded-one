@@ -66,6 +66,8 @@ class Battle
 	{
 		foreach (Character character in party.Characters)
 		{
+			if (IsBattleOver()) return;
+
 			Console.WriteLine($"It is {character.Name}'s turn...");
 
 			character.PerformAction(this);
