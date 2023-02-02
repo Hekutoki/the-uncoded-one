@@ -25,5 +25,11 @@ class AttackAction : IAction
 		Console.WriteLine($"{performingCharacter.Name} used {attack.Name} on {targetCharacter.Name}.");
 		Console.WriteLine($"{attack.Name} dealt {damage} to {targetCharacter.Name}");
 		Console.WriteLine($"{targetCharacter.Name} is now at {targetCharacter.Health}/{targetCharacter.MaxHealth}");
+
+		if (targetCharacter.Health <= 0)
+		{
+			battle.GetAllyParty(targetCharacter).RemovePartyMember(targetCharacter);
+			Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+		}
 	}
 }
