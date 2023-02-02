@@ -13,7 +13,7 @@ class Skeleton : Character
 	public Skeleton(string name = "SKELETON") : base(name,
 		new List<IAction>() { new DoNothingAction(), new AttackAction() },
 		new List<Attack>() { new BoneCrunch() },
-		maxHealth: 5) { }
+		maxHealth: 1) { }
 
 	public override void PerformAction(Battle battle)
 	{

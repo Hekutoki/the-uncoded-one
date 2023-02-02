@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,14 @@ class Battle
 	public int TurnCount { get; private set; }
 
 	public Battle(Party heroParty, Party monsterParty)
+	{
+		TurnCount = 1;
+
+		HeroParty = heroParty;
+		MonsterParty = monsterParty;
+	}
+
+	public void CreateNew(Party heroParty, Party monsterParty)
 	{
 		TurnCount = 1;
 
@@ -80,8 +89,7 @@ class Battle
 
 	private bool IsBattleOver()
 	{
-		if (HeroParty.Characters.Count == 0) return true;
-		if (MonsterParty.Characters.Count == 0) return true;
+		if (HeroParty.Characters.Count == 0 || MonsterParty.Characters.Count == 0) return true;
 
 		return false;
 	}
@@ -91,6 +99,6 @@ class Battle
 		if (HeroParty.Characters.Count == 0)
 			Console.WriteLine("Hereoes lost and the Ucoded One's forces have prevailed...");
 		else
-			Console.WriteLine("Hereoes won! The Uncoded One has been defeated!");
+			Console.WriteLine("Hereoes won! One more monster party defeated!");
 	}
 }
