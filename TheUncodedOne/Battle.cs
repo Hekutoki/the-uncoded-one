@@ -10,8 +10,8 @@ namespace TheUncodedOne;
 
 class Battle
 {
-	public readonly Party HeroParty;
-	public readonly Party MonsterParty;
+	public Party HeroParty;
+	public Party MonsterParty;
 	private bool _isHeroesTurn = true;
 
 	public int TurnCount { get; private set; }
@@ -29,6 +29,12 @@ class Battle
 	{
 		while (true)
 		{
+			if (IsBattleOver())
+			{
+				EndBattle();
+				break;
+			}
+
 			if (_isHeroesTurn) PerformActions(HeroParty);
 			else PerformActions(MonsterParty);
 
@@ -68,5 +74,21 @@ class Battle
 			Console.WriteLine("");
 			Thread.Sleep(1000);
 		}
+	}
+
+	private bool IsBattleOver()
+	{
+		if (HeroParty.Characters.Count == 0) return true;
+		if (MonsterParty.Characters.Count == 0) return true;
+
+		return false;
+	}
+
+	private void EndBattle()
+	{
+		if (HeroParty.Characters.Count == 0)
+			Console.WriteLine("Hereoes lost and the Ucoded One's forces have prevailed...");
+		else
+			Console.WriteLine("Hereoes won! The Uncoded One has been defeated!");
 	}
 }

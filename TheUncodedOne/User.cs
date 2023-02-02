@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
@@ -56,7 +57,7 @@ class User
 		}
 	}
 
-    public static void DisplayTargets(List<Character> characters)
+    public static void DisplayTargets(ReadOnlyCollection<Character> characters)
     {
 		for (int i = 0; i < characters.Count; i++)
 		{
