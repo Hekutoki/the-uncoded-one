@@ -10,8 +10,9 @@ namespace TheUncodedOne.Characters;
 
 class Skeleton : Character
 {
-	public Skeleton(string name = "SKELETON") : base(name,
+	public Skeleton(string name = "SKELETON", bool isNPC = true) : base(name,
 		new List<IAction>() { new DoNothingAction(), new AttackAction() },
 		new List<Attack>() { new BoneCrunch() },
-		maxHealth: 1) { }
+		maxHealth: 1, 
+		isPlayable: isNPC) { }
 }

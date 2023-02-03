@@ -9,18 +9,18 @@ abstract class Character
     public string Name { get; }
     public int MaxHealth { get; }
     public int Health { get; protected set; }
-    public bool IsNPC { get; }
+    public bool IsPlayable { get; }
     public List<IAction> Actions { get; }
     public List<Attack> Attacks { get; }
 
     private Random _random = new();
 
-    public Character(string name, List<IAction> actions, List<Attack> attacks, int maxHealth, bool isNPC = true)
+    public Character(string name, List<IAction> actions, List<Attack> attacks, int maxHealth, bool isPlayable = true)
     {
         Name = name;
         MaxHealth = maxHealth;
         Health = MaxHealth;
-        IsNPC = isNPC;
+        IsPlayable = isPlayable;
 
         Actions = actions.Where(a => a != null).ToList();
         Attacks = attacks;
@@ -28,7 +28,7 @@ abstract class Character
 
     public virtual void PerformAction(Battle battle)
     {
-        if (IsNPC) 
+        if (!IsPlayable) 
         {
             IAction? attackAction = Actions.Where(a => a is AttackAction).First();
 
@@ -46,7 +46,7 @@ abstract class Character
 
     public virtual Attack ChooseAttack()
     {
-		if (IsNPC) return Attacks[_random.Next(Attacks.Count)];
+		if (!IsPlayable) return Attacks[_random.Next(Attacks.Count)];
 
 		User.DisplayAttacks(Attacks);
 		int userNumber = User.GetNumber("What attack do you choose?", Attacks.Count);
@@ -59,7 +59,7 @@ abstract class Character
 		Party enemyParty = battle.GetEnemyParty(this);
 		int characterCount = enemyParty.Characters.Count;
 
-		if (IsNPC) return enemyParty.Characters[_random.Next(characterCount)];
+		if (!IsPlayable) return enemyParty.Characters[_random.Next(characterCount)];
 
 		User.DisplayTargets(enemyParty.Characters);
 		int userNumber = User.GetNumber("Who is your target?", characterCount);
