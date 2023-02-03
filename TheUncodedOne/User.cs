@@ -28,14 +28,14 @@ class User
         return userAnswer;
     }
 
-    // Gets number from user with exclusive biggest number
+    // Gets number from user with exclusive upper bound
     public static int GetNumber(string prompt, int max)
     {
 		int userAnswer;
 		while (true)
 		{
             Console.WriteLine(prompt);
-            if (int.TryParse(Console.ReadLine(), out userAnswer))   break;
+            if (int.TryParse(Console.ReadLine(), out userAnswer) && userAnswer < max) break;
 		}
 
 		return userAnswer;
