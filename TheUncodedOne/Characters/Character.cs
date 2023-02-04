@@ -1,40 +1,39 @@
-﻿using System.Reflection.Metadata;
-using TheUncodedOne.Actions;
+﻿using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
-// This is a meaningless comment
+
 namespace TheUncodedOne.Characters;
 
 abstract class Character
 {
-    public string Name { get; }
-    public int MaxHealth { get; }
-    public int Health { get; protected set; }
-    public bool IsPlayable { get; }
-    public List<IAction> Actions { get; }
-    public List<Attack> Attacks { get; }
+	public string Name { get; }
+	public int MaxHealth { get; }
+	public int Health { get; protected set; }
+	public bool IsPlayable { get; }
+	public List<IAction> Actions { get; }
+	public List<Attack> Attacks { get; }
 
-    private Random _random = new();
+	private Random _random = new();
 
-    public Character(string name, List<IAction> actions, List<Attack> attacks, int maxHealth, bool isPlayable = true)
-    {
-        Name = name;
-        MaxHealth = maxHealth;
-        Health = MaxHealth;
-        IsPlayable = isPlayable;
+	public Character(string name, List<IAction> actions, List<Attack> attacks, int maxHealth, bool isPlayable = true)
+	{
+		Name = name;
+		MaxHealth = maxHealth;
+		Health = MaxHealth;
+		IsPlayable = isPlayable;
 
-        Actions = actions.Where(a => a != null).ToList();
-        Attacks = attacks;
+		Actions = actions.Where(a => a != null).ToList();
+		Attacks = attacks;
 	}
 
-    public virtual void PerformAction(Battle battle)
-    {
-        if (!IsPlayable) 
-        {
-            IAction? attackAction = Actions.Where(a => a is AttackAction).First();
+	public virtual void PerformAction(Battle battle)
+	{
+		if (!IsPlayable)
+		{
+			IAction? attackAction = Actions.Where(a => a is AttackAction).First();
 
-            if (attackAction == null) Actions[0].Perform(this, battle);
-            else attackAction.Perform(this, battle);
-        }
+			if (attackAction == null) Actions[0].Perform(this, battle);
+			else attackAction.Perform(this, battle);
+		}
 		else
 		{
 			User.DisplayActions(Actions);
@@ -44,8 +43,8 @@ abstract class Character
 		}
 	}
 
-    public virtual Attack ChooseAttack()
-    {
+	public virtual Attack ChooseAttack()
+	{
 		if (!IsPlayable) return Attacks[_random.Next(Attacks.Count)];
 
 		User.DisplayAttacks(Attacks);
@@ -54,8 +53,8 @@ abstract class Character
 		return Attacks[userNumber];
 	}
 
-    public virtual Character ChooseTarget(Battle battle)
-    {
+	public virtual Character ChooseTarget(Battle battle)
+	{
 		Party enemyParty = battle.GetEnemyParty(this);
 		int characterCount = enemyParty.Characters.Count;
 
@@ -67,10 +66,10 @@ abstract class Character
 		return enemyParty.Characters[userNumber];
 	}
 
-    public virtual void TakeDamage(int damageAmount) 
-    {
-        if (Health > 0) Health -= damageAmount;
+	public virtual void TakeDamage(int damageAmount)
+	{
+		if (Health > 0) Health -= damageAmount;
 
-        if (Health < 0) Health = 0;
-    }
+		if (Health < 0) Health = 0;
+	}
 }
