@@ -72,4 +72,9 @@ abstract class Character
 
 		if (Health < 0) Health = 0;
 	}
+
+	public override string ToString()
+	{
+		return Name;
+	}
 }

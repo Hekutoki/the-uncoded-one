@@ -14,6 +14,7 @@ class Battle
 	public Party HeroParty;
 	public Party MonsterParty;
 	private bool _isHeroesTurn = true;
+	private int _nextActionDelay = 2000;
 
 	public int TurnCount { get; private set; }
 
@@ -46,7 +47,6 @@ class Battle
 		}
 	}
 
-	// Gives party allied to given character
 	public Party GetAllyParty(Character character)
 	{
 		foreach (Character heroChar in HeroParty.Characters)
@@ -56,7 +56,6 @@ class Battle
 		return MonsterParty;
 	}
 
-	// Gives enemy party of given character
 	public Party GetEnemyParty(Character character)
 	{
 		foreach (Character heroChar in HeroParty.Characters)
@@ -72,13 +71,14 @@ class Battle
 		{
 			if (IsBattleOver()) return;
 
-			Console.WriteLine($"It is {character.Name}'s turn...");
+			Console.WriteLine($"It is {character}'s turn...");
+			BattleStatus.Display(this, character);
 
 			character.PerformAction(this);
 
 			// Empty line for differentiating between turns
 			Console.WriteLine("");
-			Thread.Sleep(1000);
+			Thread.Sleep(_nextActionDelay);
 		}
 	}
 
@@ -87,5 +87,5 @@ class Battle
 		bool isAnyPartyEmpty = HeroParty.Characters.Count == 0 || MonsterParty.Characters.Count == 0;
 
 		return isAnyPartyEmpty;
-	} 
+	}
 }

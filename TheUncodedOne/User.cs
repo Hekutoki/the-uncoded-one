@@ -14,37 +14,37 @@ namespace TheUncodedOne;
 
 class User
 {
-    public static string GetString(string prompt)
-    {
-        string userAnswer = "";
-        while (string.IsNullOrWhiteSpace(userAnswer))
-        {
-            Console.WriteLine(prompt);
-            userAnswer = Console.ReadLine();
-        }
+	public static string GetString(string prompt)
+	{
+		string userAnswer = "";
+		while (string.IsNullOrWhiteSpace(userAnswer))
+		{
+			Console.WriteLine(prompt);
+			userAnswer = Console.ReadLine();
+		}
 
-        Console.Clear();
+		Console.Clear();
 
-        return userAnswer;
-    }
+		return userAnswer;
+	}
 
-    // Gets number from user with exclusive upper bound
-    public static int GetNumber(string prompt, int max)
-    {
+	// Gets number from user with exclusive upper bound
+	public static int GetNumber(string prompt, int max)
+	{
 		int userAnswer;
 		while (true)
 		{
-            Console.WriteLine(prompt);
-            if (int.TryParse(Console.ReadLine(), out userAnswer) && userAnswer < max) break;
+			Console.WriteLine(prompt);
+			if (int.TryParse(Console.ReadLine(), out userAnswer) && userAnswer < max) break;
 		}
 
 		return userAnswer;
 	}
 
-    public static void DisplayActions(List<IAction> actions)
-    {
-        for (int i = 0; i < actions.Count; i++)
-        {
+	public static void DisplayActions(List<IAction> actions)
+	{
+		for (int i = 0; i < actions.Count; i++)
+		{
 			Console.WriteLine(i + " ---> " + actions[i].Name);
 		}
 	}
@@ -57,8 +57,8 @@ class User
 		}
 	}
 
-    public static void DisplayTargets(ReadOnlyCollection<Character> characters)
-    {
+	public static void DisplayTargets(ReadOnlyCollection<Character> characters)
+	{
 		for (int i = 0; i < characters.Count; i++)
 		{
 			Console.WriteLine(i + " ---> " + characters[i].Name);
