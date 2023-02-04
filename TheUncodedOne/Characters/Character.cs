@@ -1,7 +1,7 @@
 ﻿using System.Reflection.Metadata;
 using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
-// This is a meaningless comment.
+// This is a meaningless comment
 namespace TheUncodedOne.Characters;
 
 abstract class Character
