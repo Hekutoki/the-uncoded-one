@@ -13,5 +13,5 @@ class Inventory
 	private List<Item> _items = new();
 	public ReadOnlyCollection<Item> Items => _items.AsReadOnly();
 
-
+	public Inventory(List<Item> items) { _items = items.Where(i => i != null).ToList(); }
 }

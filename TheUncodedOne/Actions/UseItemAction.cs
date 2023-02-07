@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Characters;
+using TheUncodedOne.Items;
 
 namespace TheUncodedOne.Actions;
 
@@ -13,6 +14,7 @@ class UseItemAction : IAction
 
 	public void Perform(Character performingCharacter, Battle battle)
 	{
-		throw new NotImplementedException();
+		Item item = performingCharacter.ChooseItem(battle.GetAllyParty(performingCharacter));
+		Console.WriteLine(item.Name);
 	}
 }

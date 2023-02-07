@@ -9,7 +9,7 @@ namespace TheUncodedOne.Items;
 
 class HealingPotion : Item
 {
-	public HealingPotion(string name) : base(name) { }
+	public HealingPotion() : base("Healing Potion") { }
 
 	public override void Use(Character targetCharacter)
 	{

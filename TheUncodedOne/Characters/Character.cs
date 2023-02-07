@@ -1,5 +1,6 @@
 ﻿using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
+using TheUncodedOne.Items;
 
 namespace TheUncodedOne.Characters;
 
@@ -7,14 +8,15 @@ abstract class Character
 {
 	public string Name { get; }
 	public int MaxHealth { get; }
+	private int _health;
 	public int Health 
-	{ 
-		get => Health;
+	{
+		get => _health;
 		set 
 		{
-			Health += value;
-			if (Health > MaxHealth) Health = MaxHealth;
-			if (Health < 0) Health = 0;
+			_health += value;
+			if (_health > MaxHealth) _health = MaxHealth;
+			if (_health < 0) _health = 0;
 		}
 	}
 
@@ -24,14 +26,14 @@ abstract class Character
 
 	private readonly Random _random = new();
 
-	public Character(string name, List<IAction> actions, List<Attack> attacks, int maxHealth, bool isPlayable = true)
+	public Character(string name, List<Attack> attacks, int maxHealth, bool isPlayable = true)
 	{
 		Name = name;
 		MaxHealth = maxHealth;
 		Health = MaxHealth;
 		IsPlayable = isPlayable;
 
-		Actions = actions.Where(a => a != null).ToList();
+		Actions = CreateActions();
 		Attacks = attacks;
 	}
 
@@ -47,9 +49,9 @@ abstract class Character
 		else
 		{
 			User.DisplayActions(Actions);
-			int userNumber = User.GetNumber("What do you do?", Actions.Count);
+			int userChoice = User.GetNumber("What do you do?", Actions.Count);
 
-			Actions[userNumber].Perform(this, battle);
+			Actions[userChoice].Perform(this, battle);
 		}
 	}
 
@@ -58,9 +60,21 @@ abstract class Character
 		if (!IsPlayable) return Attacks[_random.Next(Attacks.Count)];
 
 		User.DisplayAttacks(Attacks);
-		int userNumber = User.GetNumber("What attack do you choose?", Attacks.Count);
+		int userChoice = User.GetNumber("What attack do you choose?", Attacks.Count);
 
-		return Attacks[userNumber];
+		return Attacks[userChoice];
+	}
+
+	public virtual Item ChooseItem(Party party)
+	{
+		var items = party.Inventory.Items;
+
+		if (!IsPlayable) return items[0];
+
+		User.DisplayItems(items);
+		int userChoice = User.GetNumber("What item do you choose?", items.Count);
+
+		return items[userChoice];
 	}
 
 	public virtual Character ChooseTarget(Battle battle)
@@ -75,6 +89,8 @@ abstract class Character
 
 		return enemyParty.Characters[userNumber];
 	}
+
+	public static List<IAction> CreateActions() => new List<IAction>() { new DoNothingAction(), new AttackAction(), new UseItemAction() };
 
 	public override string ToString()
 	{

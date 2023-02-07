@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
 using TheUncodedOne.Characters;
+using TheUncodedOne.Items;
 
 namespace TheUncodedOne;
 
@@ -57,11 +58,16 @@ class User
 		}
 	}
 
+	public static void DisplayItems(ReadOnlyCollection<Item> items)
+	{
+		for (int i = 0; i < items.Count; i++) Console.WriteLine($"{i} ---> {items[i].Name}");
+	}
+
 	public static void DisplayTargets(ReadOnlyCollection<Character> characters)
 	{
 		for (int i = 0; i < characters.Count; i++)
 		{
-			Console.WriteLine(i + " ---> " + characters[i].Name);
+			Console.WriteLine(i + " ---> " + characters[i]);
 		}
 	}
 }
