@@ -18,7 +18,7 @@ class AttackAction : IAction
 		int damage = attack.GetDamage();
 
 		Character targetCharacter = performingCharacter.ChooseTarget(battle);
-		targetCharacter.TakeDamage(damage);
+		targetCharacter.Health += damage;
 
 		Console.WriteLine($"{performingCharacter} used {attack.Name} on {targetCharacter}.");
 		Console.WriteLine($"{attack.Name} dealt {damage} to {targetCharacter}");

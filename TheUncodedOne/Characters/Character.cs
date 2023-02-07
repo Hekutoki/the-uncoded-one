@@ -7,12 +7,22 @@ abstract class Character
 {
 	public string Name { get; }
 	public int MaxHealth { get; }
-	public int Health { get; protected set; }
+	public int Health 
+	{ 
+		get => Health;
+		set 
+		{
+			Health += value;
+			if (Health > MaxHealth) Health = MaxHealth;
+			if (Health < 0) Health = 0;
+		}
+	}
+
 	public bool IsPlayable { get; }
 	public List<IAction> Actions { get; }
 	public List<Attack> Attacks { get; }
 
-	private Random _random = new();
+	private readonly Random _random = new();
 
 	public Character(string name, List<IAction> actions, List<Attack> attacks, int maxHealth, bool isPlayable = true)
 	{
@@ -64,13 +74,6 @@ abstract class Character
 		int userNumber = User.GetNumber("Who is your target?", characterCount);
 
 		return enemyParty.Characters[userNumber];
-	}
-
-	public virtual void TakeDamage(int damageAmount)
-	{
-		if (Health > 0) Health -= damageAmount;
-
-		if (Health < 0) Health = 0;
 	}
 
 	public override string ToString()

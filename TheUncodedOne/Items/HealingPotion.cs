@@ -7,11 +7,12 @@ using TheUncodedOne.Characters;
 
 namespace TheUncodedOne.Items;
 
-abstract class Item
+class HealingPotion : Item
 {
-	public string Name { get; }
+	public HealingPotion(string name) : base(name) { }
 
-	public Item(string name) { Name = name; }
-
-	public abstract void Use(Character targetCharacter);
+	public override void Use(Character targetCharacter)
+	{
+		targetCharacter.Health += 10;
+	}
 }
