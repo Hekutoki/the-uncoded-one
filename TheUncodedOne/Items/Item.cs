@@ -14,4 +14,9 @@ abstract class Item
 	public Item(string name) { Name = name; }
 
 	public abstract void Use(Character targetCharacter);
+
+	public override string ToString()
+	{
+		return Name;
+	}
 }

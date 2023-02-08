@@ -19,6 +19,6 @@ class UseItemAction : IAction
 		Character targetCharacter = performingCharacter.ChooseTarget(battle, false);
 
 		item.Use(targetCharacter);
-		Console.WriteLine($"{battle.GetAllyParty(performingCharacter).Name} used {item} on {targetCharacter}");
+		Console.WriteLine($"{battle.GetAllyParty(performingCharacter)} used {item} on {targetCharacter}");
 	}
 }

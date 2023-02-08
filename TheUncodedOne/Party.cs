@@ -35,4 +35,9 @@ class Party
 
 		return new Inventory(itemList);
 	}
+
+	public override string ToString()
+	{
+		return Name;
+	}
 }
