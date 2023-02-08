@@ -77,17 +77,20 @@ abstract class Character
 		return items[userChoice];
 	}
 
-	public virtual Character ChooseTarget(Battle battle)
+	public virtual Character ChooseTarget(Battle battle, bool isEnemy = true)
 	{
-		Party enemyParty = battle.GetEnemyParty(this);
-		int characterCount = enemyParty.Characters.Count;
+		Party targetParty;
+		if (isEnemy) targetParty = battle.GetEnemyParty(this);
+		else targetParty = battle.GetAllyParty(this);
 
-		if (!IsPlayable) return enemyParty.Characters[_random.Next(characterCount)];
+		int characterCount = targetParty.Characters.Count;
 
-		User.DisplayTargets(enemyParty.Characters);
+		if (!IsPlayable) return targetParty.Characters[_random.Next(characterCount)];
+
+		User.DisplayTargets(targetParty.Characters);
 		int userNumber = User.GetNumber("Who is your target?", characterCount);
 
-		return enemyParty.Characters[userNumber];
+		return targetParty.Characters[userNumber];
 	}
 
 	public static List<IAction> CreateActions() => new List<IAction>() { new DoNothingAction(), new AttackAction(), new UseItemAction() };

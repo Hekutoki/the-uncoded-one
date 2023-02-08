@@ -15,6 +15,10 @@ class UseItemAction : IAction
 	public void Perform(Character performingCharacter, Battle battle)
 	{
 		Item item = performingCharacter.ChooseItem(battle.GetAllyParty(performingCharacter));
-		Console.WriteLine(item.Name);
+
+		Character targetCharacter = performingCharacter.ChooseTarget(battle, false);
+
+		item.Use(targetCharacter);
+		Console.WriteLine($"{battle.GetAllyParty(performingCharacter).Name} used {item} on {targetCharacter}");
 	}
 }
