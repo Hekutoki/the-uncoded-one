@@ -14,4 +14,11 @@ class Inventory
 	public ReadOnlyCollection<Item> Items => _items.AsReadOnly();
 
 	public Inventory(List<Item> items) { _items = items.Where(i => i != null).ToList(); }
+
+	public bool ContainsByName(Item item)
+	{
+		return _items.Where(i => i.Name == item.Name).Count() > 0;
+	}
+
+	public void RemoveItem(Item item) { _items.Remove(item); }
 }

@@ -14,13 +14,14 @@ abstract class Character
 		get => _health;
 		set 
 		{
-			_health += value;
+			_health = value;
 			if (_health > MaxHealth) _health = MaxHealth;
 			if (_health < 0) _health = 0;
 		}
 	}
 
 	public bool IsPlayable { get; }
+	public Intent Intent { get; private set; } = Intent.Nothing;
 	public List<IAction> Actions { get; }
 	public List<Attack> Attacks { get; }
 
@@ -39,13 +40,9 @@ abstract class Character
 
 	public virtual void PerformAction(Battle battle)
 	{
-		if (!IsPlayable)
-		{
-			IAction? attackAction = Actions.Where(a => a is AttackAction).First();
+		Intent = Intent.Nothing;
 
-			if (attackAction == null) Actions[0].Perform(this, battle);
-			else attackAction.Perform(this, battle);
-		}
+		if (!IsPlayable) GetAIAction(battle).Perform(this, battle);
 		else
 		{
 			User.DisplayActions(Actions);
@@ -99,4 +96,26 @@ abstract class Character
 	{
 		return Name;
 	}
+
+	private IAction GetAIAction(Battle battle)
+	{
+		bool isHealingAvailable = battle.GetAllyParty(this).Inventory.ContainsByName(new HealingPotion());
+		bool isHealthLow = ((float)Health / MaxHealth) < 0.25f;
+
+		if (_random.Next(4) == 3 && isHealingAvailable && isHealthLow )
+		{
+			IAction? useItem = Actions.Where(a => a is UseItemAction).First();
+			Intent = Intent.Heal;
+
+			if (useItem != null) return useItem; 
+		}
+
+		IAction? attackAction = Actions.Where(a => a is AttackAction).First();
+
+		if (attackAction == null) return Actions[0];
+		else return attackAction;
+	}
+
 }
+
+public enum Intent { Nothing, Attack, Heal }
