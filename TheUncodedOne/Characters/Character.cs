@@ -64,14 +64,14 @@ abstract class Character
 
 	public virtual Item ChooseItem(Party party)
 	{
-		var items = party.Inventory.Items;
+		var item = party.Inventory.GetConsumables();
 
-		if (!IsPlayable) return items[0];
+		if (!IsPlayable) return item[0];
 
-		User.DisplayItems(items);
-		int userChoice = User.GetNumber("What item do you choose?", items.Count);
+		User.DisplayConsumables(item);
+		int userChoice = User.GetNumber("What item do you choose?", item.Count);
 
-		return items[userChoice];
+		return item[userChoice];
 	}
 
 	public virtual Character ChooseTarget(Battle battle, bool isEnemy = true)

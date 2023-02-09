@@ -58,7 +58,7 @@ class User
 		}
 	}
 
-	public static void DisplayItems(ReadOnlyCollection<Item> items)
+	public static void DisplayConsumables(List<Item> items)
 	{
 		for (int i = 0; i < items.Count; i++) Console.WriteLine($"{i} ---> {items[i].Name}");
 	}
