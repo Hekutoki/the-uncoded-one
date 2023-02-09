@@ -18,10 +18,10 @@ class AttackAction : IAction
 		int damage = attack.GetDamage();
 
 		Character targetCharacter = performingCharacter.ChooseTarget(battle);
-		targetCharacter.TakeDamage(damage);
+		targetCharacter.Health += -damage;
 
-		Console.WriteLine($"{performingCharacter} used {attack.Name} on {targetCharacter}.");
-		Console.WriteLine($"{attack.Name} dealt {damage} to {targetCharacter}");
+		Console.WriteLine($"{performingCharacter} used {attack} on {targetCharacter}.");
+		Console.WriteLine($"{attack} dealt {damage} to {targetCharacter}");
 		Console.WriteLine($"{targetCharacter} is now at {targetCharacter.Health}/{targetCharacter.MaxHealth}");
 
 		if (targetCharacter.Health <= 0)
@@ -31,4 +31,6 @@ class AttackAction : IAction
 			Console.WriteLine($"{targetCharacter} has been defeated!");
 		}
 	}
+
+	public override string ToString() => Name;
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
 using TheUncodedOne.Characters;
+using TheUncodedOne.Items;
 
 namespace TheUncodedOne;
 
@@ -43,25 +44,26 @@ class User
 
 	public static void DisplayActions(List<IAction> actions)
 	{
-		for (int i = 0; i < actions.Count; i++)
-		{
-			Console.WriteLine(i + " ---> " + actions[i].Name);
-		}
+		for (int i = 0; i < actions.Count; i++) Console.WriteLine(i + " ---> " + actions[i]);
 	}
 
 	public static void DisplayAttacks(List<Attack> attacks)
 	{
-		for (int i = 0; i < attacks.Count; i++)
-		{
-			Console.WriteLine(i + " ---> " + attacks[i].Name);
-		}
+		for (int i = 0; i < attacks.Count; i++) Console.WriteLine(i + " ---> " + attacks[i]);
+	}
+
+	public static void DisplayConsumables(List<Item> items)
+	{
+		for (int i = 0; i < items.Count; i++) Console.WriteLine($"{i} ---> {items[i]}");
+	}
+
+	public static void DisplayGear(List<Gear> gear)
+	{
+		for (int i = 0; i < gear.Count; i++) Console.WriteLine($"{i} ---> {gear[i]}");
 	}
 
 	public static void DisplayTargets(ReadOnlyCollection<Character> characters)
 	{
-		for (int i = 0; i < characters.Count; i++)
-		{
-			Console.WriteLine(i + " ---> " + characters[i].Name);
-		}
+		for (int i = 0; i < characters.Count; i++) Console.WriteLine($"{i} ---> {characters[i]}");
 	}
 }

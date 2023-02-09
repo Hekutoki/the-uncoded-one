@@ -13,4 +13,9 @@ abstract class Attack
     public Attack(string name) { Name = name; }
 
     public abstract int GetDamage();
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }

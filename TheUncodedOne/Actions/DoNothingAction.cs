@@ -15,4 +15,6 @@ internal class DoNothingAction : IAction
 	{
 		Console.WriteLine($"{performingCharacter.Name} did nothing.");
 	}
+
+	public override string ToString() => Name;
 }

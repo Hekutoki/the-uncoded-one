@@ -14,7 +14,7 @@ class Battle
 	public Party HeroParty;
 	public Party MonsterParty;
 	private bool _isHeroesTurn = true;
-	private int _nextActionDelay = 2000;
+	private int _nextActionDelay = 1000;
 
 	public int TurnCount { get; private set; }
 
