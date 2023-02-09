@@ -15,10 +15,11 @@ class Inventory
 
 	public Inventory(List<Item> items) { _items = items.Where(i => i != null).ToList(); }
 
-	public bool ContainsByName(Item item)
-	{
-		return _items.Where(i => i.Name == item.Name).Count() > 0;
-	}
+	public bool ContainsByName(Item item) => _items.Any(i => i.Name == item.Name);
+
+	public List<Item> GetConsumables() => _items.Where(i => i is not Gear).ToList();
+
+	public List<Gear> GetGear() => _items.OfType<Gear>().ToList();
 
 	public void RemoveItem(Item item) { _items.Remove(item); }
 }
