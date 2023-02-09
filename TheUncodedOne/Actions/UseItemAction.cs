@@ -38,4 +38,6 @@ class UseItemAction : IAction
 
 		Console.WriteLine($"{battle.GetAllyParty(performingCharacter)} used {item} on {targetCharacter}");
 	}
+
+	public override string ToString() => Name;
 }

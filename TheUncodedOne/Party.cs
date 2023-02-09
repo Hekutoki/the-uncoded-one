@@ -26,11 +26,13 @@ class Party
 
 	public bool RemovePartyMember(Character character) => _characters.Remove(character);
 
-	public static Inventory CreateInventory(int healingPotionsAmount = 1)
+	public static Inventory CreateInventory(List<Gear> gear, int healingPotionsAmount = 1)
 	{
 		List<Item> itemList = new();
 
 		for (int i = 0; i < healingPotionsAmount; i++)	itemList.Add(new HealingPotion());
+
+		foreach (Gear g in gear) itemList.Add(g);
 
 		return new Inventory(itemList);
 	}

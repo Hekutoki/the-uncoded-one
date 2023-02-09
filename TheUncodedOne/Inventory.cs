@@ -22,4 +22,5 @@ class Inventory
 	public List<Gear> GetGear() => _items.OfType<Gear>().ToList();
 
 	public void RemoveItem(Item item) { _items.Remove(item); }
+	public void AddItem(Item item) { _items.Add(item); }
 }

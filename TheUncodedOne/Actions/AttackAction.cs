@@ -31,4 +31,6 @@ class AttackAction : IAction
 			Console.WriteLine($"{targetCharacter} has been defeated!");
 		}
 	}
+
+	public override string ToString() => Name;
 }
