@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Characters;
 using TheUncodedOne.Items;
+using TheUncodedOne.Items.Consumables;
+using TheUncodedOne.Items.Gear;
 
 namespace TheUncodedOne;
 
@@ -28,13 +30,13 @@ class Party
 
 	public static Inventory CreateInventory(List<Gear> gear, int healingPotionsAmount = 1)
 	{
-		List<Item> itemList = new();
+		List<Consumable> consumableList = new();
+		List<Gear> gearList = new();
 
-		for (int i = 0; i < healingPotionsAmount; i++)	itemList.Add(new HealingPotion());
+		for (int i = 0; i < healingPotionsAmount; i++) consumableList.Add(new HealingPotion());
+		for (int i = 0; i < gear.Count; i++) gearList.Add(gear[i]);
 
-		foreach (Gear g in gear) itemList.Add(g);
-
-		return new Inventory(itemList);
+		return new Inventory(consumableList, gearList);
 	}
 
 	public override string ToString()

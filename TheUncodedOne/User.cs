@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
 using TheUncodedOne.Characters;
-using TheUncodedOne.Items;
+using TheUncodedOne.Items.Consumables;
+using TheUncodedOne.Items.Gear;
 
 namespace TheUncodedOne;
 
@@ -52,9 +53,9 @@ class User
 		for (int i = 0; i < attacks.Count; i++) Console.WriteLine(i + " ---> " + attacks[i]);
 	}
 
-	public static void DisplayConsumables(List<Item> items)
+	public static void DisplayConsumables(List<Consumable> consumables)
 	{
-		for (int i = 0; i < items.Count; i++) Console.WriteLine($"{i} ---> {items[i]}");
+		for (int i = 0; i < consumables.Count; i++) Console.WriteLine($"{i} ---> {consumables[i]}");
 	}
 
 	public static void DisplayGear(List<Gear> gear)

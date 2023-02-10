@@ -1,6 +1,7 @@
 ﻿using TheUncodedOne;
 using TheUncodedOne.Characters;
 using TheUncodedOne.Items;
+using TheUncodedOne.Items.Gear;
 
 int gameMode = User.GetNumber("Choose your gameplay mode." +
 	"\n0 -> computer vs computer" +

@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TheUncodedOne.Attacks;
 
-namespace TheUncodedOne.Items;
+namespace TheUncodedOne.Items.Gear;
 
-internal class Dagger : Gear { public Dagger() : base("Dagger", new Stab()) { } }
+internal class Sword : Gear { public Sword() : base("Sword", new Slash()) { } }
