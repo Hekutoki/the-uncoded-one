@@ -22,7 +22,7 @@ class UseConsumableAction : IAction
 		{
 			targetCharacter = performingCharacter;
 
-			if (performingCharacter.Intent == Intent.Heal)
+			if (performingCharacter.Intent == ItemIntent.Heal)
 				consumable = allyParty.Inventory.Consumables.Where(i => i is HealingPotion).First();
 			else
 				consumable = allyParty.Inventory.Consumables[0];

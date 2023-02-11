@@ -16,19 +16,19 @@ int gameMode = User.GetNumber("Choose your gameplay mode." +
 
 Party heroParty =  new("Heroes", 
 	new List<Character> { new TrueProgrammer(isHeronPlayable) }, 
-	Party.CreateInventory(new List<Gear>() { new Sword(), new Dagger() }, 3));
+	Party.CreateInventory(new List<Gear>() { new Sword() }, 3));
 
 Party monsterParty1 = new("Monsters", 
 	new List<Character> { new Skeleton("SCHWING", isMonsterPlayable) }, 
-	Party.CreateInventory(new List<Gear>()));
+	Party.CreateInventory(new List<Gear>() { new Dagger() }, 1));
 
 Party monsterParty2 = new("Monsters", 
 	new List<Character> { new Skeleton("BOOM", isMonsterPlayable), new Skeleton("BIG BADDY", isMonsterPlayable) }, 
-	Party.CreateInventory(new List<Gear>() { new Sword() }));
+	Party.CreateInventory(new List<Gear>() { new Dagger(), new Dagger() }, 1));
 
 Party monsterParty3 = new("Monsters", 
 	new List<Character> { new UncodedOne(isNPC: isMonsterPlayable) }, 
-	Party.CreateInventory(new List<Gear>()));
+	Party.CreateInventory(new List<Gear>(), 1));
 
 BattleSeries battles = new(heroParty);
 

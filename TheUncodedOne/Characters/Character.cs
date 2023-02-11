@@ -21,21 +21,22 @@ abstract class Character
 		}
 	}
 
-	public Gear? EquippedGear { get; private set; } = null;
+	public Gear? EquippedGear { get; private set; }
 	public bool IsPlayable { get; }
-	public Intent Intent { get; private set; } = Intent.Nothing;
+	public ItemIntent Intent { get; private set; } = ItemIntent.Nothing;
 
 	public List<IAction> Actions { get; }
 	public List<Attack> Attacks { get; }
 
 	private readonly Random _random = new();
 
-	public Character(string name, List<Attack> attacks, int maxHealth, bool isPlayable = true)
+	public Character(string name, List<Attack> attacks, int maxHealth, bool isPlayable = true, Gear? gear = null)
 	{
 		Name = name;
 		MaxHealth = maxHealth;
 		Health = MaxHealth;
 		IsPlayable = isPlayable;
+		EquippedGear = gear;
 
 		Actions = CreateActions();
 		Attacks = attacks;
@@ -43,7 +44,7 @@ abstract class Character
 
 	public virtual void PerformAction(Battle battle)
 	{
-		Intent = Intent.Nothing;
+		Intent = ItemIntent.Nothing;
 
 		if (!IsPlayable) GetAIAction(battle).Perform(this, battle);
 		else
@@ -130,15 +131,25 @@ abstract class Character
 
 	private IAction GetAIAction(Battle battle)
 	{
-		bool isHealingAvailable = battle.GetAllyParty(this).Inventory.ContainsByName(new HealingPotion());
+		Inventory inventory = battle.GetAllyParty(this).Inventory;
+
+		bool isHealingAvailable = inventory.ContainsByName(new HealingPotion());
+		bool isGearAvailable = inventory.GearAvailable();
 		bool isHealthLow = ((float)Health / MaxHealth) < 0.25f;
 
-		if (_random.Next(4) == 3 && isHealingAvailable && isHealthLow )
+		if (_random.Next(4) == 0 && isHealingAvailable && isHealthLow )
 		{
-			IAction? useItem = Actions.Where(a => a is UseConsumableAction).First();
-			Intent = Intent.Heal;
+			IAction? useItem = Actions.OfType<UseConsumableAction>().First();
+			Intent = ItemIntent.Heal;
 
 			if (useItem != null) return useItem; 
+		}
+
+		if (_random.Next(2) == 0 && EquippedGear == null && isGearAvailable)
+		{
+			IAction? equipGear = Actions.OfType<EquipGearAction>().First();
+
+			if (equipGear != null) return equipGear;
 		}
 
 		IAction? attackAction = Actions.Where(a => a is AttackAction).First();
@@ -169,4 +180,4 @@ abstract class Character
 	}
 }
 
-public enum Intent { Nothing, Attack, Heal }
+public enum ItemIntent { Nothing, Heal }
