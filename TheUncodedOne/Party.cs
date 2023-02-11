@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using TheUncodedOne.Characters;
-using TheUncodedOne.Items;
 using TheUncodedOne.Items.Consumables;
 using TheUncodedOne.Items.Gear;
 

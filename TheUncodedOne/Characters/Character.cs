@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TheUncodedOne.Actions;
+﻿using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
-using TheUncodedOne.Items;
 using TheUncodedOne.Items.Consumables;
 using TheUncodedOne.Items.Gear;
 
