@@ -2,7 +2,7 @@
 
 internal class Stab : Attack
 {
-	public Stab() : base("STAB") { }
+	public Stab() : base("STAB", true) { }
 
 	public override int GetDamage() => 1;
 }

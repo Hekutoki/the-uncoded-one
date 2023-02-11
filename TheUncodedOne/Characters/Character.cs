@@ -58,7 +58,7 @@ abstract class Character
 
 	public virtual Attack ChooseAttack()
 	{
-		if (!IsPlayable) return Attacks[_random.Next(Attacks.Count)];
+		if (!IsPlayable) return GetAIAttack();
 
 		User.DisplayAttacks(Attacks);
 		int userChoice = User.GetNumber("What attack do you choose?", Attacks.Count);
@@ -156,6 +156,16 @@ abstract class Character
 
 		if (attackAction == null) return Actions[0];
 		else return attackAction;
+	}
+
+	private Attack GetAIAttack()
+	{
+		var specialAttacks = Attacks.Where(a => a.IsSpecial == true);
+		
+		if (specialAttacks.Any())
+			return specialAttacks.ToList()[_random.Next(specialAttacks.Count())];
+
+		return Attacks[_random.Next(Attacks.Count)];
 	}
 
 	private List<IAction> GetAvailableActions(Battle battle)
