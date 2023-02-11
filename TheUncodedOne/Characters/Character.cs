@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TheUncodedOne.Actions;
+﻿using TheUncodedOne.Actions;
 using TheUncodedOne.Attacks;
-using TheUncodedOne.Items;
+using TheUncodedOne.Items.Consumables;
+using TheUncodedOne.Items.Gear;
 
 namespace TheUncodedOne.Characters;
 
@@ -21,21 +21,22 @@ abstract class Character
 		}
 	}
 
-	public Gear? EquippedGear { get; private set; } = null;
+	public Gear? EquippedGear { get; private set; }
 	public bool IsPlayable { get; }
-	public Intent Intent { get; private set; } = Intent.Nothing;
+	public ItemIntent Intent { get; private set; } = ItemIntent.Nothing;
 
 	public List<IAction> Actions { get; }
 	public List<Attack> Attacks { get; }
 
 	private readonly Random _random = new();
 
-	public Character(string name, List<Attack> attacks, int maxHealth, bool isPlayable = true)
+	public Character(string name, List<Attack> attacks, int maxHealth, bool isPlayable = true, Gear? gear = null)
 	{
 		Name = name;
 		MaxHealth = maxHealth;
 		Health = MaxHealth;
 		IsPlayable = isPlayable;
+		EquippedGear = gear;
 
 		Actions = CreateActions();
 		Attacks = attacks;
@@ -43,12 +44,12 @@ abstract class Character
 
 	public virtual void PerformAction(Battle battle)
 	{
-		Intent = Intent.Nothing;
+		Intent = ItemIntent.Nothing;
 
 		if (!IsPlayable) GetAIAction(battle).Perform(this, battle);
 		else
 		{
-			User.DisplayActions(Actions);
+			User.DisplayActions(GetAvailableActions(battle));
 			int userChoice = User.GetNumber("What do you do?", Actions.Count);
 
 			Actions[userChoice].Perform(this, battle);
@@ -57,7 +58,7 @@ abstract class Character
 
 	public virtual Attack ChooseAttack()
 	{
-		if (!IsPlayable) return Attacks[_random.Next(Attacks.Count)];
+		if (!IsPlayable) return GetAIAttack();
 
 		User.DisplayAttacks(Attacks);
 		int userChoice = User.GetNumber("What attack do you choose?", Attacks.Count);
@@ -65,9 +66,9 @@ abstract class Character
 		return Attacks[userChoice];
 	}
 
-	public virtual Item ChooseItem(Party party)
+	public virtual Consumable ChooseItem(Party party)
 	{
-		List<Item> item = party.Inventory.GetConsumables();
+		List<Consumable> item = party.Inventory.Consumables;
 
 		if (!IsPlayable) return item[0];
 
@@ -79,7 +80,7 @@ abstract class Character
 
 	public virtual Gear ChooseGear(Party party)
 	{
-		List<Gear> inventoryGear = party.Inventory.GetGear();
+		List<Gear> inventoryGear = party.Inventory.Gear;
 
 		if (!IsPlayable) return inventoryGear[0];
 
@@ -105,8 +106,6 @@ abstract class Character
 		return targetParty.Characters[userNumber];
 	}
 
-	// Returns Gear that was equipped
-	// or null if there was no equipped gear before
 	public virtual Gear? EquipGear(Gear gear)
 	{
 		Gear? oldGear = null;
@@ -123,7 +122,7 @@ abstract class Character
 		return oldGear;
 	}
 
-	public static List<IAction> CreateActions() => new List<IAction>() { new DoNothingAction(), new AttackAction(), new UseItemAction(), new EquipGearAction() };
+	public static List<IAction> CreateActions() => new List<IAction>() { new DoNothingAction(), new AttackAction(), new UseConsumableAction(), new EquipGearAction() };
 
 	public override string ToString()
 	{
@@ -132,15 +131,25 @@ abstract class Character
 
 	private IAction GetAIAction(Battle battle)
 	{
-		bool isHealingAvailable = battle.GetAllyParty(this).Inventory.ContainsByName(new HealingPotion());
+		Inventory inventory = battle.GetAllyParty(this).Inventory;
+
+		bool isHealingAvailable = inventory.ContainsByName(new HealingPotion());
+		bool isGearAvailable = inventory.GearAvailable();
 		bool isHealthLow = ((float)Health / MaxHealth) < 0.25f;
 
-		if (_random.Next(4) == 3 && isHealingAvailable && isHealthLow )
+		if (_random.Next(4) == 0 && isHealingAvailable && isHealthLow )
 		{
-			IAction? useItem = Actions.Where(a => a is UseItemAction).First();
-			Intent = Intent.Heal;
+			IAction? useItem = Actions.OfType<UseConsumableAction>().First();
+			Intent = ItemIntent.Heal;
 
 			if (useItem != null) return useItem; 
+		}
+
+		if (_random.Next(2) == 0 && EquippedGear == null && isGearAvailable)
+		{
+			IAction? equipGear = Actions.OfType<EquipGearAction>().First();
+
+			if (equipGear != null) return equipGear;
 		}
 
 		IAction? attackAction = Actions.Where(a => a is AttackAction).First();
@@ -149,6 +158,36 @@ abstract class Character
 		else return attackAction;
 	}
 
+	private Attack GetAIAttack()
+	{
+		var specialAttacks = Attacks.Where(a => a.IsSpecial == true);
+		
+		if (specialAttacks.Any())
+			return specialAttacks.ToList()[_random.Next(specialAttacks.Count())];
+
+		return Attacks[_random.Next(Attacks.Count)];
+	}
+
+	private List<IAction> GetAvailableActions(Battle battle)
+	{
+		List<IAction> availables = new(Actions);
+
+		Inventory inventory = battle.GetAllyParty(this).Inventory;
+
+		if (!inventory.ConsumablesAvailable())
+		{
+			UseConsumableAction action = availables.OfType<UseConsumableAction>().First();
+			availables.Remove(action);
+		}
+
+		if (!inventory.GearAvailable())
+		{
+			EquipGearAction action = availables.OfType<EquipGearAction>().First();
+			availables.Remove(action);
+		}
+
+		return availables;
+	}
 }
 
-public enum Intent { Nothing, Attack, Heal }
+public enum ItemIntent { Nothing, Heal }

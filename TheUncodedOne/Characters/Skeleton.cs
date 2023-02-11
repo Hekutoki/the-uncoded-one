@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheUncodedOne.Actions;
-using TheUncodedOne.Attacks;
+﻿using TheUncodedOne.Attacks;
+using TheUncodedOne.Items.Gear;
 
 namespace TheUncodedOne.Characters;
 
 class Skeleton : Character
 {
-	public Skeleton(string name = "SKELETON", bool isNPC = true) : base(name,
+	public Skeleton(string name = "SKELETON", bool isNPC = true, Gear? gear = null) : base(name,
 		new List<Attack>() { new BoneCrunch() },
 		maxHealth: 5, 
-		isPlayable: isNPC) { }
+		isPlayable: isNPC,
+		gear: gear) { }
 }

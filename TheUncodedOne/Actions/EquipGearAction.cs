@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheUncodedOne.Characters;
-using TheUncodedOne.Items;
+﻿using TheUncodedOne.Characters;
+using TheUncodedOne.Items.Gear;
 
 namespace TheUncodedOne.Actions;
 
@@ -19,8 +14,8 @@ class EquipGearAction : IAction
 
 		Gear? oldGear = performingCharacter.EquipGear(gear);
 
-		allyParty.Inventory.RemoveItem(gear);
-		if (oldGear != null) allyParty.Inventory.AddItem(oldGear);
+		allyParty.Inventory.Gear.Remove(gear);
+		if (oldGear != null) allyParty.Inventory.Gear.Add(oldGear);
 
 		Console.WriteLine($"{performingCharacter} equipped {gear}");
 	}

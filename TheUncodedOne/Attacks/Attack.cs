@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TheUncodedOne.Attacks;
+﻿namespace TheUncodedOne.Attacks;
 
 abstract class Attack
 {
-    public string Name { get; }
+	public string Name { get; }
+	public bool IsSpecial { get; }
 
-    public Attack(string name) { Name = name; }
+	public Attack(string name, bool isSpecial = false)
+	{
+		Name = name;
+		IsSpecial = isSpecial;
+	}
 
-    public abstract int GetDamage();
+	public abstract int GetDamage();
 
-    public override string ToString()
-    {
-        return Name;
-    }
+	public override string ToString()
+	{
+		return Name;
+	}
 }
