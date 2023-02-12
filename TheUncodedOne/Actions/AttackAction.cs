@@ -21,9 +21,18 @@ class AttackAction : IAction
 
 		if (targetCharacter.Health <= 0)
 		{
-			battle.GetAllyParty(targetCharacter).RemovePartyMember(targetCharacter);
+			Party allyParty = battle.GetAllyParty(targetCharacter);
+			string gearTransfer = "";
 
-			Console.WriteLine($"{targetCharacter} has been defeated!");
+			if (targetCharacter.EquippedGear != null)
+			{
+				allyParty.Inventory.Gear.Add(targetCharacter.EquippedGear);
+				gearTransfer = $"{targetCharacter}'s gear has been returned to party inventory.";
+			}
+
+			allyParty.RemovePartyMember(targetCharacter);
+
+			Console.WriteLine($"{targetCharacter} has been defeated! {gearTransfer}");
 		}
 	}
 
