@@ -1,4 +1,6 @@
 ﻿using TheUncodedOne.Characters;
+using TheUncodedOne.Items.Consumables;
+using TheUncodedOne.Items.Gear;
 
 namespace TheUncodedOne;
 
@@ -38,6 +40,8 @@ class Battle
 
 			_isHeroesTurn = !_isHeroesTurn;
 		}
+
+		if (HeroParty.Characters.Count > 0) TransferLoot();
 	}
 
 	public Party GetAllyParty(Character character)
@@ -80,5 +84,30 @@ class Battle
 		bool isAnyPartyEmpty = HeroParty.Characters.Count == 0 || MonsterParty.Characters.Count == 0;
 
 		return isAnyPartyEmpty;
+	}
+
+	private void TransferLoot()
+	{
+		List<string> lootList = new();
+
+		foreach (Gear gear in MonsterParty.Inventory.Gear)
+		{
+			HeroParty.Inventory.Gear.Add(gear);
+			lootList.Add(gear.Name);
+		}
+
+		foreach (Consumable consumable in MonsterParty.Inventory.Consumables)
+		{
+			HeroParty.Inventory.Consumables.Add(consumable);
+			lootList.Add(consumable.Name);
+		}
+
+		if (lootList.Count > 0)
+		{
+			Console.WriteLine("You steal defeated enemies' items.");
+			foreach (string item in lootList) Console.WriteLine($"- {item}");
+
+			Console.WriteLine("");
+		}
 	}
 }

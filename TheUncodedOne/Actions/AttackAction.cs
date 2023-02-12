@@ -21,20 +21,25 @@ class AttackAction : IAction
 
 		if (targetCharacter.Health <= 0)
 		{
-			Party allyParty = battle.GetAllyParty(targetCharacter);
-			string gearTransfer = "";
-
-			if (targetCharacter.EquippedGear != null)
-			{
-				allyParty.Inventory.Gear.Add(targetCharacter.EquippedGear);
-				gearTransfer = $"{targetCharacter}'s gear has been returned to party inventory.";
-			}
-
-			allyParty.RemovePartyMember(targetCharacter);
-
-			Console.WriteLine($"{targetCharacter} has been defeated! {gearTransfer}");
+			KillCharacter(battle, targetCharacter);
 		}
 	}
 
 	public override string ToString() => Name;
+
+	private void KillCharacter(Battle battle, Character targetCharacter)
+	{
+		string gearTransfer = "";
+
+		if (targetCharacter.EquippedGear != null)
+		{
+			battle.GetEnemyParty(targetCharacter).Inventory.Gear.Add(targetCharacter.EquippedGear);
+
+			gearTransfer = $"{targetCharacter}'s {targetCharacter.EquippedGear} has been stolen by {battle.GetEnemyParty(targetCharacter)}.";
+		}
+
+		battle.GetAllyParty(targetCharacter).RemovePartyMember(targetCharacter);
+
+		Console.WriteLine($"{targetCharacter} has been defeated! {gearTransfer}");
+	}
 }
