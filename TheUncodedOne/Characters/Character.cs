@@ -40,6 +40,8 @@ abstract class Character
 
 		Actions = CreateActions();
 		Attacks = attacks;
+
+		if (EquippedGear != null) Attacks.Add(EquippedGear.Attack);
 	}
 
 	public virtual void PerformAction(Battle battle)
