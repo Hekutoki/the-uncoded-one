@@ -5,9 +5,9 @@ namespace TheUncodedOne.Characters;
 
 class UncodedOne : Character
 {
-	public UncodedOne(string name = "UNCODED ONE", bool isNPC = true, Gear? gear = null) : base(name,
+	public UncodedOne(string name = "UNCODED ONE", bool isPlayable = true, Gear? gear = null) : base(name,
 		new List<Attack>() { new Unraveling() },
 		maxHealth: 15,
-		isPlayable: isNPC,
+		isPlayable: isPlayable,
 		gear: gear) { }
 }

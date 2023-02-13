@@ -13,15 +13,20 @@ class AttackAction : IAction
 		int damage = attack.GetDamage();
 
 		Character targetCharacter = performingCharacter.ChooseTarget(battle);
-		targetCharacter.Health += -damage;
 
-		Console.WriteLine($"{performingCharacter} used {attack} on {targetCharacter}.");
-		Console.WriteLine($"{attack} dealt {damage} to {targetCharacter}");
-		Console.WriteLine($"{targetCharacter} is now at {targetCharacter.Health}/{targetCharacter.MaxHealth}");
-
-		if (targetCharacter.Health <= 0)
+		if (!attack.IsSuccessful) Console.WriteLine($"{performingCharacter} missed!");
+		else
 		{
-			KillCharacter(battle, targetCharacter);
+			targetCharacter.Health += -damage;
+
+			Console.WriteLine($"{performingCharacter} used {attack} on {targetCharacter}.");
+			Console.WriteLine($"{attack} dealt {damage} to {targetCharacter}");
+			Console.WriteLine($"{targetCharacter} is now at {targetCharacter.Health}/{targetCharacter.MaxHealth}");
+
+			if (targetCharacter.Health <= 0)
+			{
+				KillCharacter(battle, targetCharacter);
+			}
 		}
 	}
 
