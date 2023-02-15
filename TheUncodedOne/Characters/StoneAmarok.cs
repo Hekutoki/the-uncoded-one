@@ -9,5 +9,6 @@ class StoneAmarok : Character
 		new List<Attack>() { new Bite() },
 		maxHealth: 4,
 		isPlayable: isPlayable,
-		gear: gear) { }
+		gear: gear,
+		new AttackModifier(-1, "STONE ARMOR")) { }
 }

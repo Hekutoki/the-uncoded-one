@@ -18,9 +18,13 @@ Party heroParty =  new("Heroes",
 	new List<Character> { new TrueProgrammer(isHeronPlayable, gear: new VinsBow()) }, 
 	Party.CreateInventory(new List<Gear>() { new Sword() }, 3));
 
-Party monsterParty1 = new("Monsters", 
-	new List<Character> { new Skeleton("SCHWING", isMonsterPlayable, new Dagger()) }, 
-	Party.CreateInventory(new List<Gear>(), 1));
+Party monsterParty1 = new("Monsters",
+	new List<Character> { new StoneAmarok(isMonsterPlayable) },
+	Party.CreateInventory(new List<Gear>(), 0));
+
+//Party monsterParty1 = new("Monsters", 
+//	new List<Character> { new Skeleton("SCHWING", isMonsterPlayable, new Dagger()) }, 
+//	Party.CreateInventory(new List<Gear>(), 1));
 
 Party monsterParty2 = new("Monsters", 
 	new List<Character> { new Skeleton("BOOM", isMonsterPlayable), new Skeleton("BIG BADDY", isMonsterPlayable) }, 

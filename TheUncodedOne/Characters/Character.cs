@@ -24,19 +24,21 @@ abstract class Character
 	public Gear? EquippedGear { get; private set; }
 	public bool IsPlayable { get; }
 	public ItemIntent Intent { get; private set; } = ItemIntent.Nothing;
+	public AttackModifier? Modifier { get; }
 
 	public List<IAction> Actions { get; }
 	public List<Attack> Attacks { get; }
 
 	private readonly Random _random = new();
 
-	public Character(string name, List<Attack> attacks, int maxHealth, bool isPlayable = true, Gear? gear = null)
+	public Character(string name, List<Attack> attacks, int maxHealth, bool isPlayable = true, Gear? gear = null, AttackModifier? modifier = null)
 	{
 		Name = name;
 		MaxHealth = maxHealth;
 		Health = MaxHealth;
 		IsPlayable = isPlayable;
 		EquippedGear = gear;
+		Modifier = modifier;
 
 		Actions = CreateActions();
 		Attacks = attacks;
