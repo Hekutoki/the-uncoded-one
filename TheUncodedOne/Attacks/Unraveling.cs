@@ -4,7 +4,7 @@
 	{
 		private Random random = new();
 
-		public Unraveling() : base("UNRAVELING ATTACK") { }
+		public Unraveling() : base("UNRAVELING") { }
 
 		public override int GetDamage() => random.Next(2);
 	}
