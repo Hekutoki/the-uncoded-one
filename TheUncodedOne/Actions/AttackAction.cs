@@ -15,7 +15,7 @@ class AttackAction : IAction
 
 		Character targetCharacter = performingCharacter.ChooseTarget(battle);
 
-		if (targetCharacter.Modifier != null) damage += targetCharacter.Modifier.DamageChange;
+		if (targetCharacter.Modifier.HasValue) damage += targetCharacter.Modifier.Value.DamageChange;
 
 		if (!attack.IsSuccessful) Console.WriteLine($"{performingCharacter} missed!");
 		else
@@ -37,7 +37,7 @@ class AttackAction : IAction
 	{
 		Console.WriteLine($"{performingCharacter} used {attack} on {targetCharacter}.");
 
-		if (targetCharacter.Modifier != null) Console.WriteLine($"{targetCharacter.Modifier.Message}");
+		if (targetCharacter.Modifier.HasValue) Console.WriteLine($"{targetCharacter.Modifier.Value.Message}");
 
 		Console.WriteLine($"{attack} dealt {damage} to {targetCharacter}");
 		Console.WriteLine($"{targetCharacter} is now at {targetCharacter.Health}/{targetCharacter.MaxHealth}");

@@ -1,6 +1,6 @@
 ﻿namespace TheUncodedOne;
 
-public class AttackModifier
+public struct AttackModifier
 {
 	public int DamageChange { get; }
 	public string Message => $"{_cause} {ReducedOrBoosted()} the attack damage by {Math.Abs(DamageChange)} point";
