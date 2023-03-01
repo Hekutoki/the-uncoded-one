@@ -2,7 +2,7 @@
 
 class QuickShot : Attack
 {
-	public QuickShot() : base("Quick shot", true, 0.5f) { }
+	public QuickShot() : base("QUICK SHOT", true, 0.5f) { }
 
 	public override int GetDamage() => 3;
 }

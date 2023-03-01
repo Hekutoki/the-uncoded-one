@@ -1,5 +1,6 @@
 ﻿using TheUncodedOne.Attacks;
 using TheUncodedOne.Characters;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TheUncodedOne.Actions;
 
@@ -14,14 +15,14 @@ class AttackAction : IAction
 
 		Character targetCharacter = performingCharacter.ChooseTarget(battle);
 
+		if (targetCharacter.Modifier.HasValue) damage += targetCharacter.Modifier.Value.DamageChange;
+
 		if (!attack.IsSuccessful) Console.WriteLine($"{performingCharacter} missed!");
 		else
 		{
 			targetCharacter.Health += -damage;
 
-			Console.WriteLine($"{performingCharacter} used {attack} on {targetCharacter}.");
-			Console.WriteLine($"{attack} dealt {damage} to {targetCharacter}");
-			Console.WriteLine($"{targetCharacter} is now at {targetCharacter.Health}/{targetCharacter.MaxHealth}");
+			DisplayAttackInfo(performingCharacter, targetCharacter, attack, damage);
 
 			if (targetCharacter.Health <= 0)
 			{
@@ -31,6 +32,16 @@ class AttackAction : IAction
 	}
 
 	public override string ToString() => Name;
+
+	private void DisplayAttackInfo(Character performingCharacter, Character targetCharacter, Attack attack, int damage)
+	{
+		Console.WriteLine($"{performingCharacter} used {attack} on {targetCharacter}.");
+
+		if (targetCharacter.Modifier.HasValue) Console.WriteLine($"{targetCharacter.Modifier.Value.Message}");
+
+		Console.WriteLine($"{attack} dealt {damage} to {targetCharacter}");
+		Console.WriteLine($"{targetCharacter} is now at {targetCharacter.Health}/{targetCharacter.MaxHealth}");
+	}
 
 	private void KillCharacter(Battle battle, Character targetCharacter)
 	{
