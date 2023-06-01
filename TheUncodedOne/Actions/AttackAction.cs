@@ -1,9 +1,9 @@
 ﻿using TheUncodedOne.Attacks;
 using TheUncodedOne.Characters;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TheUncodedOne.Actions;
 
+// Wolololo test-issue
 class AttackAction : IAction
 {
 	public string Name => "Attack";
